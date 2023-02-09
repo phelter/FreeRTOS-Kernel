@@ -658,7 +658,7 @@ typedef enum
  *
  * @param xTask The handle of the task being updated.
  *
- * @param xRegions A pointer to a MemoryRegion_t structure that contains the
+ * @param[in] pxRegions A pointer to a MemoryRegion_t structure that contains the
  * new memory region definitions.
  *
  * Example usage:
@@ -1649,7 +1649,7 @@ configSTACK_DEPTH_TYPE uxTaskGetStackHighWaterMark2( TaskHandle_t xTask ) PRIVIL
 
 #endif
 
-#if  ( configUSE_TICK_HOOK > 0 )
+#if  ( configUSE_TICK_HOOK != 0 )
 
 /**
  *  task.h
@@ -1660,6 +1660,21 @@ configSTACK_DEPTH_TYPE uxTaskGetStackHighWaterMark2( TaskHandle_t xTask ) PRIVIL
  * This hook function is called in the system tick handler after any OS work is completed.
  */
     void vApplicationTickHook( void ); /*lint !e526 Symbol not defined as it is an application callback. */
+
+#endif
+
+#if ( configUSE_IDLE_HOOK != 0 )
+
+/**
+ *  task.h
+ * @code{c}
+ * void vApplicationTickHook( void );
+ * @endcode
+ *
+ * This hook function is called in the ilde task handler
+ * @note: vApplicationIdleHook() MUST NOT, UNDER ANY CIRCUMSTANCES, CALL A FUNCTION THAT MIGHT BLOCK.
+ */
+    void vApplicationIdleHook( void );
 
 #endif
 
